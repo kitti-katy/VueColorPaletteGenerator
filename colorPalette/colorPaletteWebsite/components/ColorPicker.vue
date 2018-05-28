@@ -1,31 +1,45 @@
 <template>
   <div>
-
-    <svg width="15" height="15" id="pickerCircle" :style="{marginLeft: pickerPositionX, pickerPositionY }">
-      <circle cx='7.5' cy='7.5' r="7.5" stroke="green" stroke-width="1" fill="yellow" />
+    <svg width="15" height="15" :style = "{'margin-left': $store.state.pickerPositionX, 'margin-top': $store.state.pickerPositionY }">
+      <circle cx='7.5' cy='7.5' r="7.5" stroke="green" stroke-width="1" fill="yellow"></circle>
     </svg>
-
     <canvas id = 'canvasColorPicker' width = '360' height = '200'
-            @onmousemove="(e)=>mouseMovePicker(e)"
-      onMouseDown = {(e)=> this.getColor(e)}
-      onMouseUp={this.resetMouseDownPicker}></canvas>
+            v-on:mousemove= "(e)=>handleFormInputClientXY(e,'colorPickerStore/mouseMovePicker')"
+      v-on:mousedown.left = "colorPicked"
+      v-on:mouseup.left = "(e)=>handleFormInputClientXY(e,'colorPickerStore/resetMouseDownPicker')"></canvas>
 
     <canvas id = 'canvasSaturationPicker' width = '20' height = '200'
-            onMouseMove={(e) => this.mouseMoveSaturation(e)}
-    onMouseDown = {(e)=>this.changeSaturation(e)}
-    onMouseUp={this.resetMouseDownSaturation}></canvas>
+            v-on:mousemove = "(e)=>handleFormInputClientXY(e,'colorPickerStore/mouseMoveSaturation')"
+            v-on:mousedown.left = "(e)=>handleFormInputClientXY(e,'colorPickerStore/changeSaturation')"
+            v-on:mouseup.left = "(e)=>handleFormInputClientXY(e,'colorPickerStore/resetMouseDownSaturation')"></canvas>
   </div>
-
 </template>
 <script>
 export default {
 name: 'ColorPicker',
 props: ['label', 'textValue', 'sliderValue', 'textChange', 'sliderChange', 'inputMin', 'inputMax'],
 data () {
-return {
-headers: ['HSL', 'Starndards', 'Custom', 'From Picture']
-}
-}
+},
+  methods:{
+      handleFormInputClientXY (e, mutationName) {
+        this.$store.commit(mutationName, {clientX:e.clientX, clientY:e.clientY})
+      },
+    colorPicked(e){
+      this.$store.commit('colorPickerStore/getColor', {clientX:e.clientX, clientY:e.clientY})
+      this.$store.commit('colorPickerStore/generateSaturationCanvas', {clientX:e.clientX, clientY:e.clientY})
+    },
+    mouseMovePicker(e){
+
+    }
+    mouseMovePicker
+},
+  mounted: function () {
+  console.log("CALLED ON MOUNTED")
+    this.$store.commit('set', 'pickerPositionX',5)
+    this.$store.commit('set', 'pickerPositionY', 5 )
+    this.$store.commit('colorPickerStore/generatePickerCanvas')
+    this.$store.commit('colorPickerStore/generateSaturationCanvas')
+  },
 }
 </script>
 

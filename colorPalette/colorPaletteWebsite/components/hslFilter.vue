@@ -4,15 +4,32 @@
 
   <div id='HSLColorPicker'>
     HSL FILTER EXISTS
+    <color-picker></color-picker>
   </div>
 
   <div id='HSLColorCircle'>
-  </div>
+</div>
 
-  <SliderInput id="HueFilter" ></SliderInput>
-  <SliderInput id="SatFilter"></SliderInput>
-  <SliderInput id="LightFilter"></SliderInput>
-  <SliderInput id="HSLColorNumber"></SliderInput>
+  <slider-input id="HueFilter"
+                :value="$store.state.hueChange"
+                label="Hue Change"
+                value-name="hueChange"
+                min="0" max="100" step="1"></slider-input>
+  <slider-input id="SatFilter"
+                :value="$store.state.satChange"
+                label="Saturation Change"
+                value-name="satChange"
+                min="0" max="100" step="1"></slider-input>
+  <slider-input id="LightFilter"
+                :value="$store.state.lightChange"
+                label="Light Change"
+                value-name="lightChange"
+                min="0" max="100" step="1"></slider-input>
+  <slider-input id="HSLColorNumber"
+                :value="$store.state.numberOfColors"
+                label="Number Of Colors"
+                value-name="numberOfColors"
+                min="0" max="100" step="4"></slider-input>
 
   <div id='HSLColorSquares'>
   </div>
@@ -21,13 +38,22 @@
 
 </template>
 <script>
+import SliderInput from "./SliderInput";
+import ColorPicker from "./ColorPicker";
 export default {
 name: 'hslFilter',
-props: ['label', 'textValue', 'sliderValue', 'textChange', 'sliderChange', 'inputMin', 'inputMax'],
+  components: {ColorPicker, SliderInput},
+  props: ['label', 'textValue', 'sliderValue', 'textChange', 'sliderChange', 'inputMin', 'inputMax'],
 data () {
 return {
 headers: ['HSL', 'Starndards', 'Custom', 'From Picture']
 }
+}
+,
+computed: {
+  hueChange () {
+    return this.$store.state.hueChange
+  }
 }
 }
 </script>

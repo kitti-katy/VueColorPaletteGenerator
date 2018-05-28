@@ -8,8 +8,7 @@
            style='display:inline; float:left; margin-left:2%'>{{header}}</p>
       </div>
 
-      <div id='filtersBody'>
-
+      <div id='filtersBody'>\
         <hsl-filter></hsl-filter>
       </div>
 

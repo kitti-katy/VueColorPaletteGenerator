@@ -34,5 +34,13 @@ module.exports = {
         })
       }
     }
-  }
+  },
+
+  /*
+  ** Global CSS
+  */
+  css: [
+    { src: '@/sass/main.sass', lang: 'sass' }
+  ],
+
 }

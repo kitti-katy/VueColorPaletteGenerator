@@ -2,9 +2,9 @@
   <div class='SliderContainer'>
     <div class='SliderLabel'>{{label}}</div>
     <input class='SliderTextInput' type='text' maxLength='3'
-           v-model="text.value" @input="text.change"/>
+           v-model="value" @input="$store.commit('set', {valueName:valueName, value: value})"/>
     <input class='SliderInput' type="range"
-           v-model="slider.value" @input="slider.change" min="input.min" max="input.max"/>
+           v-model="value" @input="$store.commit('set', {valueName:valueName, value: value})" min="min" max="max" step="step"/>
   </div>
 </template>
 
@@ -12,11 +12,10 @@
 
   export default {
     name: 'SliderInput',
-    props: ['label', 'textValue', 'sliderValue', 'textChange', 'sliderChange', 'inputMin', 'inputMax'],
+    props: ['label', 'value', 'OnChange', 'min', 'max', 'step', 'ChangeName','valueName'],
     data () {
-      return {
-        headers: ['HSL', 'Starndards', 'Custom', 'From Picture']
-      }
+    },
+    methods: {
     }
   }
 </script>
