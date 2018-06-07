@@ -44,6 +44,7 @@ export const mutations = {
       }
     }
   },
+  //HERE
   mouseMovePicker(state,{clientX, clientY}){
     if(state.pickerMouseDown) {
       mutations.getColor(state,{clientX, clientY})

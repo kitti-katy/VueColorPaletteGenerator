@@ -71,7 +71,7 @@ computed: {
   }
   #HSLColorPicker{
     grid-row: 1;
-    grid-column: 1 / 3;
+    grid-column: 1 / 5;
     background-color: white;
   }
   #HSLColorCircle{
