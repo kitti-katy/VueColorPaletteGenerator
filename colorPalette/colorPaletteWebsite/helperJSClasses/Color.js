@@ -4,7 +4,7 @@
 
 class Color {
 
-  constructor(v1, v2, v3, i) {
+  constructor(v1, v2, v3, colorFormat) {
     this.createChangedHSLColor = this.createChangedHSLColor.bind(this)
     this.setAllFromHex = this.setAllFromHex.bind(this)
     this.setAllFromRGB = this.setAllFromRGB.bind(this)
@@ -21,11 +21,22 @@ class Color {
     this.RGBtoHex = this.RGBtoHex.bind(this)
     this.HexToHSL = this.HexToHSL.bind(this)
     this.HexToRGB = this.HSLtoRGB.bind(this)
+    
+    switch(colorFormat){
+      case "RGB":
+      this.setAllFromRGB(v1, v2, v3)
+      break
 
-    let constructors = [this.setAllFromRGB, this.setAllFromHSL, this.setAllFromHex, this.createChangedHSLColor]
-    constructors[i](v1, v2, v3)
+      case "HSL":
+      this.setAllFromHSL(v1, v2, v3)
+      break
 
+      case "Hex":
+      this.setAllFromHex(v1, v2, v3)
+      break
 
+    }
+    
   }
 
 

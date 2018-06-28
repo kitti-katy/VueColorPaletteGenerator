@@ -4,7 +4,7 @@
 import Color from '../helperJSClasses/Color'
 
 export const state = () => ({
-  baseColor: new Color(100, 0, 100, 0),
+  baseColor: new Color(100, 0, 100, "RGB"),
   pickerPositionX: 0,
   pickerPositionY: 0,
   pickerSatPositionY: 0,
@@ -31,7 +31,7 @@ export const mutations = {
     }
   },
   generateSaturationCanvas(state){
-    console.log(state.baseColor)
+    //console.log(state.baseColor)
     let hue = state.baseColor.hsl.hue
     let light = state.baseColor.hsl.light
     let canvas = document.getElementById('canvasSaturationPicker')
@@ -44,12 +44,6 @@ export const mutations = {
       }
     }
   },
-  //HERE
-  mouseMovePicker(state,{clientX, clientY}){
-    if(state.pickerMouseDown) {
-      mutations.getColor(state,{clientX, clientY})
-    }
-  },
 
   getColor(state,{clientX, clientY}, ){
     let canvas = document.getElementById('canvasColorPicker')
@@ -60,7 +54,7 @@ export const mutations = {
     state.pickerPositionY=y-5
     let ctx = canvas.getContext("2d");
     let imageData = ctx.getImageData(360-x, y, 1, 1).data;
-    let newColor = new Color( imageData[0],  imageData[1],  imageData[2],0)
+    let newColor = new Color( imageData[0],  imageData[1],  imageData[2],"RGB")
     state.baseColor = newColor
   },
   changeSaturation(state, {clientX, clientY}){
@@ -73,11 +67,10 @@ export const mutations = {
     let color = state.baseColor
     let hue = color.hsl.hue
     let light = color.hsl.light
-    let newColor = new Color( imageData[0],  imageData[1],  imageData[2],0)
+    let newColor = new Color( imageData[0],  imageData[1],  imageData[2],"RGB")
     //did not work just without sat
     let sat = newColor.hsl.sat
-    let newColor2 = new Color( hue,  sat,  light,1)
-    state.baseColor = newColor2
+    state.baseColor = new Color( hue,  sat,  light,"HSL")
   }
 
 };

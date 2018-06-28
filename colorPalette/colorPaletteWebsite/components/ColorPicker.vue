@@ -20,35 +20,38 @@
             v-on:mouseup.left = "(e)=>handleFormInputClientXY(e,'colorPickerStore/resetMouseDownSaturation')"></canvas>
 
 
-    <div class='HSLInputBox PickerInput'>
-      
+    <div class='HSLInputBox PickerInput'>      
+
       <div>H</div>
-      <input type="number"  min="0" max="359">
+      <input type="number"  min="0" max="359"
+              v-model="value" @input="$store.commit('set', {valueName:valueName, value: value})">
 
       <div>S</div>
-      <input type="number"  min="0" max="99">
+      <input type="number"  min="0" max="99" 
+              v-model="value" @input="$store.commit('set', {valueName:valueName, value: value})">
 
       <div>L</div>
-      <input type="number"  min="0" max="99">
-    
+      <input type="number"  min="0" max="99"
+              v-model="value" @input="$store.commit('set', {valueName:valueName, value: value})">
+
     </div>
 
     <div class='RGBInputBox PickerInput'>
-      
+
       <div>R</div>
-      <input type="number"  min="0" max="256">
+      <input type="number"  min="0" max="256"
+              v-model="value" @input="$store.commit('set', {valueName:valueName, value: value})">
 
       <div>G</div>
-      <input type="number"  min="0" max="256">
+      <input type="number"  min="0" max="256"
+              v-model="value" @input="$store.commit('set', {valueName:valueName, value: value})">
 
       <div>B</div>
-      <input type="number"  min="0" max="256">
-    
+      <input type="number"  min="0" max="256"
+              v-model="value" @input="$store.commit('set', {valueName:valueName, value: value})">
     </div>
 
-
   </div>
-
 
 </template>
 
@@ -89,8 +92,12 @@ data () {
     },
     resetMouseOnSaturationCanvas(){
       this.$store.commit('set', {valueName:'mouseDownSaturation', value: false})
-    }
+    },
 
+    //HSL, RGB input handling
+    setNewColor(color){
+      this.$store.commit('set', {valueName:'mouseDownSaturation', value: false})
+    }
 },
   mounted: function () {
     this.$store.commit('set', 'pickerPositionX',5)
