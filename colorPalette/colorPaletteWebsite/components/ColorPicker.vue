@@ -12,12 +12,11 @@
             v-on:mousemove= "mouseMovePicker"
             v-on:mousedown.left = "colorPicked"
             v-on:mouseup.left = "(e)=>handleFormInputClientXY(e,'colorPickerStore/resetMouseDownPicker')"></canvas>
-    
     </div>
 
     <canvas class="SaturationBox" id = 'canvasSaturationPicker' width = '25' height = '200'
-            v-on:mousemove = "(e)=>handleFormInputClientXY(e,'colorPickerStore/mouseMoveSaturation')"
-            v-on:mousedown.left = "(e)=>handleFormInputClientXY(e,'colorPickerStore/changeSaturation')"
+            v-on:mousemove = "mouseMoveSaturation"
+            v-on:mousedown.left = "saturationPicked"
             v-on:mouseup.left = "(e)=>handleFormInputClientXY(e,'colorPickerStore/resetMouseDownSaturation')"></canvas>
 
 
@@ -62,17 +61,36 @@ data () {
 },
   methods:{
 
-    handleFormInputClientXY (e, mutationName) {
-      this.$store.commit(mutationName, {clientX:e.clientX, clientY:e.clientY})
-    },
+    // Mouse Down
     colorPicked(e){
+      this.$store.commit('set', {valueName:'pickerMouseDown', value: true})
       this.$store.commit('colorPickerStore/getColor', {clientX:e.clientX, clientY:e.clientY})
       this.$store.commit('colorPickerStore/generateSaturationCanvas', {clientX:e.clientX, clientY:e.clientY})
     },
-    mouseMovePicker(e){
+    saturationPicked(e){
+      this.$store.commit('set', {valueName:'mouseDownSaturation', value: true})
+      this.$store.commit('colorPickerStore/changeSaturation', {clientX:e.clientX, clientY:e.clientY})
+      this.$store.commit('colorPickerStore/generatePickerCanvas', {clientX:e.clientX, clientY:e.clientY})
+    },
+
+    // Mouse Move
+    mouseMoveSaturation(e){
       if(this.$store.state.colorPickerStore.pickerMouseDown)
       this.colorPicked(e)
+    },
+    mouseMovePicker(e){
+      if(this.$store.state.colorPickerStore.mouseDownSaturation)
+      this.saturationPicked(e)
+    },
+
+    // Mouse Up
+    resetMouseOnCanvas(){
+      this.$store.commit('set', {valueName:'pickerMouseDown', value: false})
+    },
+    resetMouseOnSaturationCanvas(){
+      this.$store.commit('set', {valueName:'mouseDownSaturation', value: false})
     }
+
 },
   mounted: function () {
     this.$store.commit('set', 'pickerPositionX',5)

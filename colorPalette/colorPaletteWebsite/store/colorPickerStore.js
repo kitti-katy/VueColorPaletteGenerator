@@ -51,18 +51,7 @@ export const mutations = {
     }
   },
 
-  mouseMoveSaturation(state,{clientX, clientY}){
-    if(state.mouseDownSaturation)
-      mutations.changeSaturation(state, {clientX, clientY})
-  },
-  resetMouseDownPicker(state, {clientX, clientY}){
-    state.pickerMouseDown=false
-  },
-  resetMouseDownSaturation(state, {clientX, clientY}){
-    state.mouseDownSaturation=false;
-  },
-  getColor(state,{clientX, clientY}){
-    state.pickerMouseDown=true;
+  getColor(state,{clientX, clientY}, ){
     let canvas = document.getElementById('canvasColorPicker')
     let rect = canvas.getBoundingClientRect()
     let x = clientX - rect.left
@@ -75,7 +64,6 @@ export const mutations = {
     state.baseColor = newColor
   },
   changeSaturation(state, {clientX, clientY}){
-    state.mouseDownSaturation = true
     let canvas = document.getElementById('canvasSaturationPicker')
     let rect = canvas.getBoundingClientRect()
     let x = clientX - rect.left
@@ -90,7 +78,6 @@ export const mutations = {
     let sat = newColor.hsl.sat
     let newColor2 = new Color( hue,  sat,  light,1)
     state.baseColor = newColor2
-    mutations.generatePickerCanvas(state.baseColor)
   }
 
 };

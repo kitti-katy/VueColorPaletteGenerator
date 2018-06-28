@@ -1,0 +1,5 @@
+{"editor.fontSize": 17,
+    
+     // Controls whether the editor should render indent guides
+  "editor.renderIndentGuides": false
+}
