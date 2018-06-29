@@ -14,10 +14,13 @@ export const state = () => ({
   satPickerMouseDown:false,
   satPickerMouseMove:false,
   counter:0,
-  mouseDownSaturation:false
+  mouseDownSaturation:false,
 })
 
 export const mutations = {
+  set (state, {valueName, value}) {
+    state[valueName] = value
+  },
   generatePickerCanvas(state){
     let sat = state.baseColor.hsl.sat
     let canvas = document.getElementById('canvasColorPicker')
@@ -54,8 +57,10 @@ export const mutations = {
     state.pickerPositionY=y-5
     let ctx = canvas.getContext("2d");
     let imageData = ctx.getImageData(360-x, y, 1, 1).data;
-    let newColor = new Color( imageData[0],  imageData[1],  imageData[2],"RGB")
-    state.baseColor = newColor
+    state.baseColor = new Color( imageData[0],  imageData[1],  imageData[2],"RGB")
+
+
+
   },
   changeSaturation(state, {clientX, clientY}){
     let canvas = document.getElementById('canvasSaturationPicker')
@@ -71,6 +76,7 @@ export const mutations = {
     //did not work just without sat
     let sat = newColor.hsl.sat
     state.baseColor = new Color( hue,  sat,  light,"HSL")
-  }
+
+  },
 
 };

@@ -23,6 +23,7 @@ class Color {
     this.HexToRGB = this.HSLtoRGB.bind(this)
     
     switch(colorFormat){
+      
       case "RGB":
       this.setAllFromRGB(v1, v2, v3)
       break
@@ -36,7 +37,7 @@ class Color {
       break
 
     }
-    
+
   }
 
 

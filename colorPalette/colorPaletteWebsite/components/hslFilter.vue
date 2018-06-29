@@ -11,22 +11,22 @@
 </div>
 
   <slider-input id="HueFilter"
-                :value="$store.state.hueChange"
+                :value="$store.state.colorPickerStore.hueChange"
                 label="Hue Change"
                 value-name="hueChange"
                 min="0" max="100" step="1"></slider-input>
   <slider-input id="SatFilter"
-                :value="$store.state.satChange"
+                :value="$store.state.colorPickerStore.satChange"
                 label="Saturation Change"
                 value-name="satChange"
                 min="0" max="100" step="1"></slider-input>
   <slider-input id="LightFilter"
-                :value="$store.state.lightChange"
+                :value="$store.state.colorPickerStore.lightChange"
                 label="Light Change"
                 value-name="lightChange"
                 min="0" max="100" step="1"></slider-input>
   <slider-input id="HSLColorNumber"
-                :value="$store.state.numberOfColors"
+                :value="$store.state.colorPickerStore.numberOfColors"
                 label="Number Of Colors"
                 value-name="numberOfColors"
                 min="0" max="100" step="4"></slider-input>
@@ -52,7 +52,7 @@ headers: ['HSL', 'Starndards', 'Custom', 'From Picture']
 ,
 computed: {
   hueChange () {
-    return this.$store.state.hueChange
+    return this.$store.state.colorPickerStore.hueChange
   }
 }
 }
@@ -66,7 +66,7 @@ computed: {
     display: grid;
     grid-gap: 20px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 200px 60px 60px 60px auto;
+    grid-template-rows: 5000px 60px 60px 60px auto;
     background-color: white;
   }
   #HSLColorPicker{
