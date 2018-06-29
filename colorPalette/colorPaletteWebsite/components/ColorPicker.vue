@@ -11,30 +11,30 @@
     <canvas id = 'canvasColorPicker' width = '360' height = '200'
             v-on:mousemove= "mouseMovePicker"
             v-on:mousedown.left = "colorPicked"
-            v-on:mouseup.left = "resetMouseOnCanvas"
-            v-on:mouseout = "resetMouseOnCanvas"></canvas>
+            v-on:mouseup.left = "resetMouseOnCanvas($event)"
+            v-on:mouseout = "resetMouseOnCanvas($event)"></canvas>
     </div>
 
     <canvas class="SaturationBox" id = 'canvasSaturationPicker' width = '25' height = '200'
             v-on:mousemove = "mouseMoveSaturation"
             v-on:mousedown.left = "saturationPicked"
-            v-on:mouseup.left = "resetMouseOnSaturationCanvas"
-            v-on:mouseout = "resetMouseOnSaturationCanvas"></canvas>
+            v-on:mouseup.left = "resetMouseOnSaturationCanvas($event)"
+            v-on:mouseout = "resetMouseOnSaturationCanvas($event)"></canvas>
 
 
     <div class='HSLInputBox PickerInput'>      
 
       <div>H</div>
       <input type="number"  min="0" max="359"
-              :value="$store.state.colorPickerStore.h" @input="setNewColorFromHSL($event,'h')">
+              :value="$store.state.colorPickerStore.baseColor.hsl.hue" @input="setNewColorFromHSL($event,'h')">
 
       <div>S</div>
       <input type="number"  min="0" max="99" 
-              :value="$store.state.colorPickerStore.s" @input="setNewColorFromHSL($event,'s')">
+              :value="$store.state.colorPickerStore.baseColor.hsl.sat" @input="setNewColorFromHSL($event,'s')">
 
       <div>L</div>
       <input type="number"  min="0" max="99"
-              :value="$store.state.colorPickerStore.s" @input="setNewColorFromHSL($event,'l')">
+              :value="$store.state.colorPickerStore.baseColor.hsl.light" @input="setNewColorFromHSL($event,'l')">
 
     </div>
 
@@ -42,34 +42,33 @@
 
       <div>R</div>
       <input type="number"  min="0" max="256"
-              :value="$store.state.colorPickerStore.r" @input="setNewColorFromRGB($event,'r')">
+              :value="$store.state.colorPickerStore.baseColor.rgb.r" @input="setNewColorFromRGB($event,'r')">
 
       <div>G</div>
       <input type="number"  min="0" max="256"
-              :value="$store.state.colorPickerStore.g" @input="setNewColorFromRGB($event,'g')">
+              :value="$store.state.colorPickerStore.baseColor.rgb.g" @input="setNewColorFromRGB($event,'g')">
 
       <div>B</div>
       <input type="number"  min="0" max="256"
-              :value="$store.state.colorPickerStore.b" @input="setNewColorFromRGB($event,'b')">
+              :value="$store.state.colorPickerStore.baseColor.rgb.b" @input="setNewColorFromRGB($event,'b')">
     </div>
 
   </div>
     <div height="100px" width="100px" :style = "{'background-color':$store.state.colorPickerStore.hex}">
   </div>
   </div>
-
-
-
 </template>
 
 
 <script>
 
 import Color from "../helperJSClasses/Color"
+import _ from 'lodash'
 export default {
 name: 'ColorPicker',
 props: ['label', 'textValue', 'sliderValue', 'textChange', 'sliderChange', 'inputMin', 'inputMax'],
 data () {
+  self: this
 },
   methods:{
 
@@ -86,14 +85,14 @@ data () {
     },
 
     // Mouse Move
-    mouseMoveSaturation(e){
-      if(this.$store.state.colorPickerStore.mouseDownSaturation)
-      this.saturationPicked(e)
-    },
-    mouseMovePicker(e){
-      if(this.$store.state.colorPickerStore.pickerMouseDown )
-      this.colorPicked(e)
-    },
+    mouseMoveSaturation:_.throttle((e, self) => {
+      if(self.$store.state.colorPickerStore.mouseDownSaturation)
+      self.saturationPicked(e)
+    }, 2000),
+    mouseMovePicker:_.throttle((e, self) => {
+      if(self.$store.state.colorPickerStore.pickerMouseDown )
+      self.colorPicked(e)
+    }, 2000),
 
     // Mouse Up/Out
     resetMouseOnCanvas(){
@@ -166,7 +165,8 @@ data () {
 
   #pickerCircle{
     position: absolute;
-    z-Index: 4000
+    z-Index: 4000;
+    pointer-events:none;
   }
 
 </style>
