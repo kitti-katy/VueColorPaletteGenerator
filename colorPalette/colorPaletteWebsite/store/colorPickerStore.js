@@ -5,9 +5,6 @@ import Color from '../helperJSClasses/Color'
 
 export const state = () => ({
   baseColor: new Color(100, 0, 100, "RGB"),
-  pickerPositionX: '0',
-  pickerPositionY: '0',
-  pickerSatPositionY: 0,
   pickerCircleBorderColor: 'white',
   pickerMouseDown:false,
   pickerMouseMove:false,
@@ -15,8 +12,6 @@ export const state = () => ({
   satPickerMouseMove:false,
   counter:0,
   mouseDownSaturation:false,
-  saturationPickerPositionX:0,
-  saturationPickerPositionY:0
 })
 
 export const mutations = {
@@ -27,12 +22,21 @@ export const mutations = {
     let sat = state.baseColor.hsl.sat
     let canvas = document.getElementById('canvasColorPicker')
     let ctx = canvas.getContext("2d");
-    for(let i=0; i<360; i+=1){
-      for(let j=0; j<202; j+=2){
-        ctx.fillStyle = 'hsl(' + i  + ', ' + sat + '%, ' + j/2 + '%)'
-        ctx.fillRect(i, j, i, j+2);
-      }
-    }
+
+for(let i=0; i<360; i+=1){
+  var gradient = ctx.createLinearGradient(i, 0, i, 200);
+  gradient.addColorStop(0, "hsl("+i+","+sat+"%,0%)");
+  gradient.addColorStop(0.5, "hsl("+i+","+sat+"%,50%)");
+  gradient.addColorStop(1, "hsl("+i+","+sat+"%,100%)");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(i, 0, i, 200);
+}
+/*
+   let img = new Image() 
+   img.src = "./images/canvas/"+sat*2 +".png" 
+   img.onload = function () {
+    ctx.drawImage(img,0,0);
+   }*/
   },
   generateSaturationCanvas(state){
     //console.log(state.baseColor)
@@ -53,20 +57,15 @@ export const mutations = {
     let rect = canvas.getBoundingClientRect()
     let x = clientX - rect.left
     let y = clientY - rect.top
-    state.pickerPositionX=x-15 + 'px'
-    state.pickerPositionY=y-15 + 'px'
-    let ctx = canvas.getContext("2d");
-    let imageData = ctx.getImageData(x, y, 1, 1).data;
-    state.baseColor = new Color( imageData[0],  imageData[1],  imageData[2],"RGB")
+    state.baseColor = new Color( Math.round(x),  state.baseColor.hsl.sat,  Math.round(y/2),"HSL")
   },
   changeSaturation(state, {clientY}){
     let canvas = document.getElementById('canvasSaturationPicker')
     let rect = canvas.getBoundingClientRect()
     let y = clientY - rect.top
-    state.saturationPickerPositionY = y - 5 + 'px'
     let hsl = state.baseColor.hsl
-    state.baseColor = new Color( hsl.hue,  y/2,  hsl.light,"HSL")
-    console.log(state.baseColor.hsl.sat)
+    state.baseColor = new Color( hsl.hue,  Math.round(y/2),  hsl.light,"HSL")
+    console.log(state.baseColor.HEXString)
   },
 
 };

@@ -13,7 +13,6 @@ class Color {
     this.setColorCSSStrings = this.setColorCSSStrings.bind(this)
     this.setRGBString = this.setRGBString.bind(this)
     this.setHSLString = this.setHSLString.bind(this)
-    this.setHexStringFromRGB = this.setHexStringFromRGB.bind(this)
 
     this.RGBtoHSL = this.RGBtoHSL.bind(this)
     this.HSLtoHex = this.HSLtoHex.bind(this)
@@ -37,8 +36,9 @@ class Color {
       break
 
     }
-
   }
+
+  // create new color from old with the hsl changes
   createChangedHSLColor( color, changes, v3) {
     let hueChange = changes.hueChange
     let satChange = changes.satChange
@@ -50,48 +50,46 @@ class Color {
     let light = hsl.light + lightChange
     light = light == 100 ? light : light % 100
     this.setAllFromHSL(hue, sat, light)
-
   }
 
+  // set from
   setAllFromHex(hex, v2, v3) {
     this.HEXString = hex
     this.rgb = this.HexToRGB()
     this.setAllFromRGB(this.rgb.r, this.rgb.g, this.rgb.b)
-
   }
-
   setAllFromRGB(r, g, b) {
     this.rgb = {r: r, g: g, b: b}
     this.hsl = this.RGBtoHSL(r, g, b)
     this.setColorCSSStrings()
   }
-
-
   setAllFromHSL(hue, sat, light) {
     this.hsl = {hue: hue, sat: sat, light: light}
     this.rgb = this.HSLtoRGB(hue, sat, light)
     this.setColorCSSStrings()
   }
 
-
+  // set strings
   setColorCSSStrings() {
     this.setRGBString()
     this.setHSLString()
-    this.setHexStringFromRGB(this.rgb.r, this.rgb.g, this.rgb.b)
+    this.RGBtoHex()
   }
-
   setRGBString() {
     this.RGBString = 'rgb(' + this.rgb.r + ', ' + this.rgb.g + ', ' + this.rgb.b + ')'
   }
-
   setHSLString() {
     this.HSLString = 'hsl(' + this.hsl.hue + ', ' + this.hsl.sat + ', ' + this.hsl.light + ')'
   }
-
-  setHexStringFromRGB(r, g, b) {
-    this.HEXString = this.RGBtoHex(r, g, b)
+  RGBtoHex() {
+    this.HEXString = '#' + this.numberToHex(parseInt(this.rgb.r)) + this.numberToHex(parseInt(this.rgb.g)) + this.numberToHex(parseInt(this.rgb.b))
+  }
+  numberToHex(n){
+    let hex = n.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
   }
 
+  // conversions from RGB
   RGBtoHSL(r, g, b) {
 
     r /= 255, g /= 255, b /= 255;
@@ -100,7 +98,7 @@ class Color {
     let h, s, l = (max + min) / 2;
 
     if (max == min) {
-      h = s = 0; // achromatic
+      h = s = 0; 
     } else {
       let d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
@@ -119,9 +117,10 @@ class Color {
 
       h /= 6;
     }
-    return {hue: h * 360, sat: s * 100, light: l * 100};
+    return {hue: Math.round(h * 360), sat: Math.round(s * 100), light: Math.round(l * 100)};
   }
 
+  // conversions from HSL
   HSLtoRGB(h, s, l) {
     let r, g, b;
     h /= 360
@@ -129,7 +128,7 @@ class Color {
     l /= 100
 
     if (s == 0) {
-      r = g = b = l; // achromatic
+      r = g = b = l; 
     } else {
       function hue2rgb(p, q, t) {
         if (t < 0) t += 1;
@@ -147,41 +146,24 @@ class Color {
       g = hue2rgb(p, q, h);
       b = hue2rgb(p, q, h - 1 / 3);
     }
-
-    //  console.log('RGB')
-    //  console.log( r * 255, g * 255,  b * 255)
-
-    return {r: r * 255, g: g * 255, b: b * 255};
+    return {r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255)};
   }
-
-
-  RGBtoHex(r, g, b) {
-    return '#' + this.numberToHex(r) + this.numberToHex(g) + this.numberToHex(b)
-  }
-
-  numberToHex(n){
-    let hex = n.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-  }
-
   HSLtoHex(h, s, l) {
     let rgb = this.HSLtoRGB(h, s, l)
-    return this.RGBtoHex(rgb.r, rgb.g, rgb.b)
-
+    return this.RGBtoHex()
   }
   extractNumberFromHex(start,end){
     return parseInt(this.HEXString.substring(start,end), 16)
   }
 
+  // conversions from Hex
   HexToRGB() {
     return {r: extractNumberFromHex(1,3), g: extractNumberFromHex(3,5), b: extractNumberFromHex(5,7)};
   }
-
   HexToHSL(hexString) {
     let rgb = this.HexToRGB(hexString)
-    return this.RGBtoHex(rgb.r, rgb.g, rgb.b)
+    return this.RGBtoHex()
   }
-
 
 }
 
