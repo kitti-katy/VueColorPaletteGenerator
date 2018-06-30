@@ -39,8 +39,6 @@ class Color {
     }
 
   }
-
-
   createChangedHSLColor( color, changes, v3) {
     let hueChange = changes.hueChange
     let satChange = changes.satChange
@@ -56,7 +54,8 @@ class Color {
   }
 
   setAllFromHex(hex, v2, v3) {
-    this.rgb = this.HexToRGB(hex)
+    this.HEXString = hex
+    this.rgb = this.HexToRGB()
     this.setAllFromRGB(this.rgb.r, this.rgb.g, this.rgb.b)
 
   }
@@ -157,29 +156,25 @@ class Color {
 
 
   RGBtoHex(r, g, b) {
-    //    console.log(r,g,b)
-    let hexR = Math.round(r).toString(16)
-    hexR = hexR.length ==1? hexR + '0': hexR
-    let hexG = Math.round(g).toString(16)
-    hexG = hexG.length ==1? hexG + '0': hexG
-    let hexB = Math.round(b).toString(16)
-    hexB = hexB.length ==1? hexB + '0': hexB
-//        console.log('#' + hexR + hexB + hexG)
-    return '#' + hexR + hexB + hexG
+    return '#' + this.numberToHex(r) + this.numberToHex(g) + this.numberToHex(b)
+  }
+
+  numberToHex(n){
+    let hex = n.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
   }
 
   HSLtoHex(h, s, l) {
-
     let rgb = this.HSLtoRGB(h, s, l)
     return this.RGBtoHex(rgb.r, rgb.g, rgb.b)
 
   }
+  extractNumberFromHex(start,end){
+    return parseInt(this.HEXString.substring(start,end), 16)
+  }
 
-  HexToRGB(hexString) {
-    let r = hexString.substring(1, 3)
-    let g = hexString.substring(3, 5)
-    let b = hexString.substring(5, 7)
-    return {r: parseInt(r, 16), g: parseInt(g, 16), b: parseInt(b, 16)};
+  HexToRGB() {
+    return {r: extractNumberFromHex(1,3), g: extractNumberFromHex(3,5), b: extractNumberFromHex(5,7)};
   }
 
   HexToHSL(hexString) {

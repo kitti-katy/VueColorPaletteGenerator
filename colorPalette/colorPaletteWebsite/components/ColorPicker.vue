@@ -3,10 +3,12 @@
   <div id="ColorPickerBox">
     
     <div class="MainBox">
-    <svg id="pickerCircle" width="15" height="15" 
-         :style = "{'margin-left': $store.state.colorPickerStore.pickerPositionX, 'margin-top': $store.state.colorPickerStore.pickerPositionY }">
-      <circle cx='7.5' cy='7.5' r="7.5" stroke="green" stroke-width="1" fill="yellow"></circle>
-    </svg>
+    <div id="pickerCircle" 
+         :style = "{'margin-left': $store.state.colorPickerStore.pickerPositionX, 'width':'30px', 'height': '30px',
+         'margin-top': $store.state.colorPickerStore.pickerPositionY, 'background-color': $store.state.colorPickerStore.baseColor.HEXString,
+         'border':'2px solid white', 'border-radius':'15px' }">
+
+    </div>
 
     <canvas id = 'canvasColorPicker' width = '360' height = '200'
             v-on:mousemove= "mouseMovePicker"
@@ -15,11 +17,23 @@
             v-on:mouseout = "resetMouseOnCanvas($event)"></canvas>
     </div>
 
+<div>
+
+    <div id="saturationCircle" 
+         :style = "{'margin-left': '-2.5px', 'width':'32.5px', 'height': '14px',
+         'margin-top': $store.state.colorPickerStore.saturationPickerPositionY, 
+         'background-color': $store.state.colorPickerStore.baseColor.HEXString,
+         'border':'2px solid white', 'border-radius':'3px' }">
+    </div>
+
     <canvas class="SaturationBox" id = 'canvasSaturationPicker' width = '25' height = '200'
             v-on:mousemove = "mouseMoveSaturation"
             v-on:mousedown.left = "saturationPicked"
             v-on:mouseup.left = "resetMouseOnSaturationCanvas($event)"
             v-on:mouseout = "resetMouseOnSaturationCanvas($event)"></canvas>
+</div>
+
+
 
 
     <div class='HSLInputBox PickerInput'>      
@@ -52,9 +66,17 @@
       <input type="number"  min="0" max="256"
               :value="$store.state.colorPickerStore.baseColor.rgb.b" @input="setNewColorFromRGB($event,'b')">
     </div>
+    
+        <div class='HexInputBox'>
 
+      <div>Hex</div>
+      <input type="text"  
+              :value="$store.state.colorPickerStore.baseColor.HEXString" @input="setNewColorFromHex">
+    </div>
+
+ <div height="100px" width="100px" :style = "{'background-color':$store.state.colorPickerStore.baseColor.HEXString}">
   </div>
-    <div height="100px" width="100px" :style = "{'background-color':$store.state.colorPickerStore.hex}">
+   
   </div>
   </div>
 </template>
@@ -80,19 +102,20 @@ data () {
     },
     saturationPicked(e){
       this.$store.commit('colorPickerStore/set', {valueName:'mouseDownSaturation', value: true})
-      this.$store.commit('colorPickerStore/changeSaturation', {clientX:e.clientX, clientY:e.clientY})
+      this.$store.commit('colorPickerStore/changeSaturation', {clientY:e.clientY})
       this.$store.commit('colorPickerStore/generatePickerCanvas', {clientX:e.clientX, clientY:e.clientY})
     },
 
     // Mouse Move
-    mouseMoveSaturation:_.throttle((e, self) => {
-      if(self.$store.state.colorPickerStore.mouseDownSaturation)
-      self.saturationPicked(e)
-    }, 2000),
-    mouseMovePicker:_.throttle((e, self) => {
-      if(self.$store.state.colorPickerStore.pickerMouseDown )
-      self.colorPicked(e)
-    }, 2000),
+    mouseMoveSaturation:_.throttle(function(e) {
+      if(this.$store.state.colorPickerStore.mouseDownSaturation)
+      this.saturationPicked(e)
+    }, 50),
+
+    mouseMovePicker:_.throttle(function(e) {
+      if(this.$store.state.colorPickerStore.pickerMouseDown )
+      this.colorPicked(e)
+    }, 0),
 
     // Mouse Up/Out
     resetMouseOnCanvas(){
@@ -121,7 +144,7 @@ data () {
       this.$store.commit('colorPickerStore/set', {valueName:'baseColor', value:new Color(r,g,b, "RGB")})
     },
     //Hex
-    setNewColorFromHex(e,stateName){
+    setNewColorFromHex(e){
       this.$store.commit('colorPickerStore/set', {valueName:'baseColor', value:new Color(hex,0,0, "Hex")})
     }
 },
@@ -130,6 +153,8 @@ data () {
     this.$store.commit('colorPickerStore/set', 'pickerPositionY', 5 )
     this.$store.commit('colorPickerStore/generatePickerCanvas')
     this.$store.commit('colorPickerStore/generateSaturationCanvas')
+    
+
   },
 }
 </script>
@@ -164,6 +189,11 @@ data () {
   }
 
   #pickerCircle{
+    position: absolute;
+    z-Index: 4000;
+    pointer-events:none;
+  }
+  #saturationCircle{
     position: absolute;
     z-Index: 4000;
     pointer-events:none;

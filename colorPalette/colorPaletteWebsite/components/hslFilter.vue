@@ -66,7 +66,7 @@ computed: {
     display: grid;
     grid-gap: 20px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 5000px 60px 60px 60px auto;
+    grid-template-rows: 200px 60px 60px 60px auto;
     background-color: white;
   }
   #HSLColorPicker{
