@@ -11,27 +11,34 @@
 </div>
 
   <slider-input id="HueFilter"
-                :value="$store.state.colorPickerStore.hueChange"
+                :value="$store.state.hslChanges.hueChange"
                 label="Hue Change"
                 value-name="hueChange"
+                store-path="hslChanges/"
                 min="0" max="100" step="1"></slider-input>
   <slider-input id="SatFilter"
-                :value="$store.state.colorPickerStore.satChange"
+                :value="$store.state.hslChanges.satChange"
                 label="Saturation Change"
                 value-name="satChange"
+                store-path="hslChanges/"
                 min="0" max="100" step="1"></slider-input>
   <slider-input id="LightFilter"
-                :value="$store.state.colorPickerStore.lightChange"
+                :value="$store.state.hslChanges.lightChange"
                 label="Light Change"
                 value-name="lightChange"
+                store-path="hslChanges/"
                 min="0" max="100" step="1"></slider-input>
   <slider-input id="HSLColorNumber"
-                :value="$store.state.colorPickerStore.numberOfColors"
+                :value="$store.state.hslChanges.colorNumber"
                 label="Number Of Colors"
-                value-name="numberOfColors"
+                value-name="colorNumber"
+                store-path="hslChanges/"
                 min="0" max="100" step="4"></slider-input>
 
   <div id='HSLColorSquares'>
+      <div v-for="n in parseInt($store.state.hslChanges.colorNumber)+1"
+       :key="n-1" :style="{'height':'100px', 'width':'100px', 'background-color':getNextColor(n-1).HEXString}" >
+       {{getNextColor(n-1).HEXString}}</div>
   </div>
 
 </div>
@@ -40,6 +47,7 @@
 <script>
 import SliderInput from "./SliderInput";
 import ColorPicker from "./ColorPicker";
+import Color from '../helperJSClasses/Color';
 export default {
 name: 'hslFilter',
   components: {ColorPicker, SliderInput},
@@ -53,7 +61,20 @@ headers: ['HSL', 'Starndards', 'Custom', 'From Picture']
 computed: {
   hueChange () {
     return this.$store.state.colorPickerStore.hueChange
-  }
+  }},
+  methods:{
+      getNextColor(i){
+        let hueChange = this.$store.state.hslChanges.hueChange
+        let satChange = this.$store.state.hslChanges.satChange
+        let lightChange = this.$store.state.hslChanges.lightChange
+
+        let color = new Color(this.$store.state.colorPickerStore.baseColor ,
+            {   hueChange: hueChange * (i) - 360 * (Math.floor( hueChange * i / 360)),
+                satChange : satChange * (i) - 100 * (Math.floor(satChange * i  / 100)),
+                lightChange : lightChange * (i) - 100 * (Math.floor(lightChange * i / 100))}
+            , 0, "ChangeColor")
+        return color
+    }
 }
 }
 </script>
@@ -108,9 +129,9 @@ computed: {
   }
   #HSLColorSquares
   {
-    gridRow: 5;
-    gridColumn: 1 / 5;
-    backgroundColor: white;
+    grid-row: 5;
+    grid-column: 1 / 5;
+    background-color: white;
   }
 
 </style>

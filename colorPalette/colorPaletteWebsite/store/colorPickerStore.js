@@ -10,7 +10,6 @@ export const state = () => ({
   pickerMouseMove:false,
   satPickerMouseDown:false,
   satPickerMouseMove:false,
-  counter:0,
   mouseDownSaturation:false,
 })
 

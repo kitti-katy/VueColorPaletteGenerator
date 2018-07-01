@@ -8,7 +8,7 @@
            style='display:inline; float:left; margin-left:2%'>{{header}}</p>
       </div>
 
-      <div id='filtersBody'>\
+      <div id='filtersBody'>
         <hsl-filter></hsl-filter>
       </div>
 
@@ -16,15 +16,18 @@
 
 
     </div>
-    <div id='tryIt'></div>
+    <div id='tryIt'>
+      <try-it></try-it>
+    </div>
   </div>
 </template>
 
 <script>
   import HslFilter from "../components/hslFilter";
+  import TryIt from "../components/TryIt";
 
   export default {
-    components: {HslFilter},
+    components: {HslFilter, TryIt},
     name: 'EditorPage',
     data () {
       return {

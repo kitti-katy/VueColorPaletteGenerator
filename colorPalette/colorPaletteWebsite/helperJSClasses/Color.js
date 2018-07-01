@@ -32,14 +32,17 @@ class Color {
       break
 
       case "Hex":
-      this.setAllFromHex(v1, v2, v3)
+      this.setAllFromHex(v1)
       break
+      
+      case "ChangeColor":
+      this.createChangedHSLColor(v1,v2)
 
     }
   }
 
   // create new color from old with the hsl changes
-  createChangedHSLColor( color, changes, v3) {
+  createChangedHSLColor( color, changes) {
     let hueChange = changes.hueChange
     let satChange = changes.satChange
     let lightChange = changes.lightChange
@@ -53,7 +56,7 @@ class Color {
   }
 
   // set from
-  setAllFromHex(hex, v2, v3) {
+  setAllFromHex(hex) {
     this.HEXString = hex
     this.rgb = this.HexToRGB()
     this.setAllFromRGB(this.rgb.r, this.rgb.g, this.rgb.b)
