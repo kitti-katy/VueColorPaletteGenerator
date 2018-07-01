@@ -63,9 +63,10 @@ for(let i=0; i<360; i+=1){
     let canvas = document.getElementById('canvasSaturationPicker')
     let rect = canvas.getBoundingClientRect()
     let y = clientY - rect.top
+    if(y<0||y>200)
+    return
     let hsl = state.baseColor.hsl
     state.baseColor = new Color( hsl.hue,  Math.round(y/2),  hsl.light,"HSL")
-    console.log(state.baseColor.HEXString)
   },
 
 };

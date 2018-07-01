@@ -23,10 +23,7 @@
          'border':'2px solid white', 'border-radius':'3px' }">
     </div>
     <canvas class="SaturationBox" id = 'canvasSaturationPicker' width = '25' height = '200'
-            v-on:mousemove = "mouseMoveSaturation"
-            v-on:mousedown.left = "saturationPicked"
-            v-on:mouseup.left = "resetMouseOnSaturationCanvas($event)"
-            v-on:mouseout = "resetMouseOnSaturationCanvas($event)"></canvas>
+            v-on:mousedown.left = "saturationPicked"></canvas>
 </div>
 
 
@@ -83,10 +80,24 @@ data () {
       this.$store.commit('colorPickerStore/getColor', {clientX:e.clientX, clientY:e.clientY})
       this.$store.commit('colorPickerStore/generateSaturationCanvas')
     },
-    saturationPicked(e){
+    saturationPicked: function(e){
       this.$store.commit('colorPickerStore/set', {valueName:'mouseDownSaturation', value: true})
-      this.$store.commit('colorPickerStore/changeSaturation', {clientY:e.clientY})
+      this.$store.commit('colorPickerStore/changeSaturation',{clientY:e.clientY})
       this.$store.commit('colorPickerStore/generatePickerCanvas')
+
+      const mouseMoveListenerHandle = window.addEventListener('mousemove',
+                                         function(e){
+                                            if(this.$store.state.colorPickerStore.mouseDownSaturation)
+                                                     this.$store.commit('colorPickerStore/changeSaturation', {clientY:e.clientY})
+                                                     this.$store.commit('colorPickerStore/generatePickerCanvas', {clientX:e.clientX, clientY:e.clientY})
+                                         }.bind(this),
+                                         )
+
+          window.addEventListener('mouseup',
+            function(){
+            window.removeEventListener('mousemove', mouseMoveListenerHandle)
+            this.$store.commit('colorPickerStore/set', {valueName:'mouseDownSaturation', value: false})}.bind(this),
+            {once:true})
     },
 
     // Mouse Move
