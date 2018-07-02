@@ -1,8 +1,16 @@
 <template>
+
+
+
+
+
   <div class='SliderContainer'>
     <div class='SliderLabel'>{{label}}</div>
     <input class='SliderTextInput' type='text' maxLength='3'
            v-model="value" @input="$store.commit(storePath+'set', {valueName:valueName, value: value})"/>
+
+
+
     <input class='SliderInput' type="range"
            v-model="value" @input="$store.commit(storePath+'set', {valueName:valueName, value: value})" min="min" max="max" step="step"/>
   </div>

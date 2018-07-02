@@ -44,19 +44,29 @@
  </b-container>
 
  <b-container class="topMarginContainer">
-       <h5>Palette Generated </h5>
+       <h5>Palette Generated  
+
+<button @click="exportPaletteToJsonFile"
+style="border:none; background-color:transparent;float:right; font-size:0.75em;cursor: pointer;"> 
+<span >Export JSON </span>
+<img src='~/static/export.svg' alt="export JSON"/>
+
+</button></h5>
     <hr>
-    <b-col sm="12" class="topMarginContainer">
-      <div id='' >
-        <div style="display:inline" v-for="n in parseInt($store.state.hslChanges.colorNumber)+1"
-             :key="n-1" :style="{'height':'100px', 'width':'100px', 'background-color':getNextColor(n-1).HEXString}">
-          {{getNextColor(n-1).HEXString}}
+
+    <b-col id='GeneratedColors' sm="12" class="topMarginContainer">
+      <div style="display:inline;width:100px;" v-for="n in parseInt($store.state.hslChanges.colorNumber)+1" :key="n-1">
+        
+        <div style="display:inline-block">
+        <span style=" display:block;max-width:100px; text-align:center; vertical-align: text-bottom; margin:0">{{getNextColor(n-1).HEXString}}</span>
+        <div style="display:inline-block"
+              :style="{'min-height':'50px', 'min-width':'80px', 'background-color':getNextColor(n-1).HEXString}">
+        </div>
         </div>
       </div>
 
  </b-col>
  </b-container>
-
 
   </div>
 
@@ -95,7 +105,26 @@
           }
           , 0, "ChangeColor")
         return color
+      },
+
+      
+    exportPaletteToJsonFile(jsonData) {
+      let colorElements = document.getElementById("GeneratedColors").getElementsByTagName("span")
+      let colors = {}
+      for (var i = 0; i < colorElements.length; i++) { 
+        colors["color"+i]=colorElements[i].innerHTML
       }
+
+    let dataStr = JSON.stringify(colors);
+    let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    let exportFileDefaultName = 'palette.json';
+
+    let linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+}
     }
   }
 </script>
@@ -164,6 +193,21 @@
     grid-column: 1 / 5;
     background-color: white;
   }
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: red;
+  fill: red;
+}
 
+/* ==========================================
+Single-colored icons can be modified like so:
+.icon-name {
+  font-size: 32px;
+  color: red;
+}
+========================================== */
 
 </style>

@@ -20,26 +20,26 @@
         It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
         and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
       </p>
-      <button id="buttonPrimary"
+      <b-button id="buttonPrimary"
               :style="{'color':$store.state.tryIt.buttonPrimaryFont, 'background-color':$store.state.tryIt.buttonPrimary}">
         primary
-      </button>
-      <button id="buttonSecondary"
+      </b-button>
+      <b-button id="buttonSecondary"
               :style="{'color':$store.state.tryIt.buttonSecondaryFont, 'background-color':$store.state.tryIt.buttonSecondary}">
         secondary
-      </button>
-      <button id="buttonSuccess"
+      </b-button>
+      <b-button id="buttonSuccess"
               :style="{'color':$store.state.tryIt.buttonSuccessFont, 'background-color':$store.state.tryIt.buttonSuccess}">
         success
-      </button>
-      <button id="buttonInfo"
+      </b-button>
+      <b-button id="buttonInfo"
               :style="{'color':$store.state.tryIt.buttonInfoFont, 'background-color':$store.state.tryIt.buttonInfo}">
         info
-      </button>
-      <button id="buttonDanger"
+      </b-button>
+      <b-button id="buttonDanger"
               :style="{'color':$store.state.tryIt.buttonDangerFont, 'background-color':$store.state.tryIt.buttonDanger}">
         danger
-      </button>
+      </b-button>
 
     </div>
 
