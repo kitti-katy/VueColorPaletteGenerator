@@ -13,9 +13,16 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@nuxtjs/bootstrap-vue": "^2.0.4",
+    "bootstrap": "^4.1.1",
     "lodash": "^4.17.10",
+    "mdbvue": "^4.3.0",
     "nuxt": "^1.0.0",
+    "nuxt-stylus-resources-loader": "^1.1.3",
+    "nuxt-vue-material": "^1.1.0",
     "vue-lodash": "^2.0.0",
+    "vue-material": "^1.0.0-beta-10.2",
+    "vuetify": "^1.1.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -26,6 +33,8 @@
     "eslint-plugin-vue": "^4.0.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
-    "style-loader": "^0.21.0"
+    "style-loader": "^0.21.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2"
   }
 }

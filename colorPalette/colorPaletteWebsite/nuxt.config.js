@@ -1,4 +1,7 @@
+
+
 module.exports = {
+  plugins: ['~plugins/vuetify.js', '~plugins/materialDesign.js', '~plugins/bootstrap.js' ],
   /*
   ** Headers of the page
   */
@@ -10,9 +13,26 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto' }
+    ],
+    script: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js' },
+    ],
+    css:[ {
+      src: '~/assets/css/app.styl',
+      lang: 'styl'
+    },
+    'bootstrap/dist/css/bootstrap.css',
+ 'bootstrap-vue/dist/bootstrap-vue.css'
+  ],
+    modules:[
+      'vue-material',
+      ['nuxt-vue-material', {theme: 'default-dark'}],
+      'bootstrap-vue/nuxt',
+    ],
   },
+
   /*
   ** Customize the progress bar color
   */
@@ -20,7 +40,32 @@ module.exports = {
   /*
   ** Build configuration
   */
+
+
   build: {
+
+    extend(config, ctx) {
+      const vueLoader = config.module.rules.find(r => r.loader === 'vue-loader')
+      
+      
+   config.module.rules.push({  
+      test: /\.styl$/,
+      loader: ['style-loader', 'css-loader', 'stylus-loader']
+      })},
+
+
+
+    vendor: ['vuetify'],
+    extractCSS: true,
+    extend(config, ctx) {
+      if (ctx.isServer) {
+        config.externals = [
+          nodeExternals({
+            whitelist: [/^vuetify/]
+          })
+        ]
+      }
+    },
     /*
     ** Run ESLint on save
     */

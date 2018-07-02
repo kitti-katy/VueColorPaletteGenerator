@@ -1,7 +1,7 @@
 export const state = () => ({
     colorNumber:6,
-    hueChange:30,
-    satChange:10,
+    hueChange:12,
+    satChange:0,
     lightChange:20
   })
   
