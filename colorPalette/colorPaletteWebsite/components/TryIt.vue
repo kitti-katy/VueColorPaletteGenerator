@@ -121,13 +121,19 @@
 
     <div id="colors" style="width:100%">
       <div style="display:inline-block" :id="'pickColor' + n"
-           v-for="n in parseInt($store.state.hslChanges.colorNumber)+1"
+           v-for="n in parseInt($store.state.hslChanges.colorNumber)"
            @click="changePointingColor(getNextColor(n-1).HEXString, 'pickColor' + n)"
            :key="n-1" :style="{ 'border':$store.state.tryIt.currentColorSquare=='pickColor' + n?'2px solid black':'none',
            'height':'30px', 'width':'50px', 'background-color':getNextColor(n-1).HEXString}">
       </div>
     </div>
+    
+<img src='~/static/tree.svg' id="TreeSVG"/>
+
   </div>
+
+
+
 
 </template>
 
@@ -164,6 +170,19 @@
       changePointingAttribute(pickedAttribute) {
         this.$store.commit('tryIt/set', {valueName: 'pickedAttribute', value: pickedAttribute})
       },
+      findAllFills() {
+
+      let colorElements = document.getElementById("TreeSVG").getElementsByTagName("path")
+      let colors = {}
+      console.log(colorElements)
+      for (var i = 0; i < colorElements.length; i++) { 
+        colorElements[i].setAttribute("fill", "red");
+      }
+
+      }
+    },
+        mounted: function () {
+      this.findAllFills()
     }
   }
 </script>

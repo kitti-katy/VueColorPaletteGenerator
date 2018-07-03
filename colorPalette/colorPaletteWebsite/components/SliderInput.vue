@@ -33,7 +33,6 @@
 
   .SliderContainer
   {
-    height: 100%;
     display: grid;
     grid-gap: 2%;
     grid-template-columns: 150px 30px;

@@ -1,29 +1,25 @@
 <template>
   <div class="topMarginContainer">
 
-<h5> Choose Color </h5>
-<hr>
+    <h5> Choose Color </h5>
+    <hr>
     <div id="ColorPickerBox">
       <b-container>
         <b-row>
-          <b-col sm="5">
-            <div class="MainBox">
+          <b-col sm="7">
+            <div class="MainBox" style ="display:inline">
               <div id="pickerCircle"
                    :style="{'margin-left': $store.state.colorPickerStore.baseColor.hsl.hue-15 + 'px', 'width':'30px', 'height': '30px',
          'margin-top': $store.state.colorPickerStore.baseColor.hsl.light*2-15 + 'px', 'background-color': $store.state.colorPickerStore.baseColor.HEXString,
          'border':'2px solid white', 'border-radius':'15px' }">
               </div>
-              <canvas id='canvasColorPicker' width='360' height='200'
+              <canvas id='canvasColorPicker' width='360' height='200' style="display:inline; margin-right:7px"
                       v-on:mousemove="mouseMovePicker"
                       v-on:mousedown.left="colorPicked"
                       v-on:mouseup.left="resetMouseOnCanvas($event)"
                       v-on:mouseout="resetMouseOnCanvas($event)"></canvas>
-            </div>
-          </b-col>
-
-          <b-col sm="1">
-            <div>
-              <div id="saturationCircle"
+           
+           <div id="saturationCircle" style="display:inline"
                    :style="{'margin-left': '-2.5px', 'width':'32.5px', 'height': '14px',
          'margin-top': $store.state.colorPickerStore.baseColor.hsl.sat*2- 5 + 'px',
          'background-color': $store.state.colorPickerStore.baseColor.HEXString,
@@ -32,112 +28,117 @@
               <canvas class="SaturationBox" id='canvasSaturationPicker' width='25' height='200'
                       v-on:mousedown.left="saturationPicked"></canvas>
             </div>
+              <div>
+
+            </div>
           </b-col>
 
-   <b-col sm="6">
-
-    <b-row>
-
-     <b-col sm="12">
-     <b-row>
-            <b-col sm="4">
 
 
-              <b-row>
-                <b-col sm="1"><label for="H">H:</label></b-col>
-                <b-col sm="8">
-                  <b-form-input size="sm" type="number" id="H" min="0" max="359"
-                                :value="$store.state.colorPickerStore.baseColor.hsl.hue"
-                                @input.native="setNewColorFromHSL($event,'h')">
-                  </b-form-input>
-                </b-col>
-              </b-row>
 
-              <b-row class="topMarginComponent">
-                <b-col sm="1"><label for="S">S:</label></b-col>
-                <b-col sm="8">
-                  <b-form-input size="sm" type="number" id="S" min="0" max="99"
-                                :value="$store.state.colorPickerStore.baseColor.hsl.sat"
-                                @input.native="setNewColorFromHSL($event,'s')">
-                  </b-form-input>
-                </b-col>
-              </b-row>
+          <b-col sm="5">
 
-              <b-row class="topMarginComponent">
-                <b-col sm="1"><label for="L">L:</label></b-col>
-                <b-col sm="8">
-                  <b-form-input size="sm" type="number" id="L" min="0" max="99"
-                                :value="$store.state.colorPickerStore.baseColor.hsl.light"
-                                @input.native="setNewColorFromHSL($event,'l')">
-                  </b-form-input>
-                </b-col>
-              </b-row>
+            <b-row>
 
+              <b-col sm="9">
+                <b-row>
+                  <b-col sm="6">
+
+                    <b-row>
+                      <b-col sm="1"><label for="H">H:</label></b-col>
+                      <b-col sm="8">
+                        <b-form-input size="sm" type="number" id="H" min="0" max="359"
+                                      :value="$store.state.colorPickerStore.baseColor.hsl.hue"
+                                      @input.native="setNewColorFromHSL($event,'h')">
+                        </b-form-input>
+                      </b-col>
+                    </b-row>
+
+                    <b-row class="topMarginComponent">
+                      <b-col sm="1"><label for="S">S:</label></b-col>
+                      <b-col sm="8">
+                        <b-form-input size="sm" type="number" id="S" min="0" max="99"
+                                      :value="$store.state.colorPickerStore.baseColor.hsl.sat"
+                                      @input.native="setNewColorFromHSL($event,'s')">
+                        </b-form-input>
+                      </b-col>
+                    </b-row>
+
+                    <b-row class="topMarginComponent">
+                      <b-col sm="1"><label for="L">L:</label></b-col>
+                      <b-col sm="8">
+                        <b-form-input size="sm" type="number" id="L" min="0" max="99"
+                                      :value="$store.state.colorPickerStore.baseColor.hsl.light"
+                                      @input.native="setNewColorFromHSL($event,'l')">
+                        </b-form-input>
+                      </b-col>
+                    </b-row>
+
+                  </b-col>
+
+                  <b-col sm="6">
+
+
+                    <b-row>
+                      <b-col sm="1"><label for="R">R:</label></b-col>
+                      <b-col sm="8">
+                        <b-form-input size="sm" type="number" id="R" min="0" max="256"
+                                      :value="$store.state.colorPickerStore.baseColor.rgb.r"
+                                      @input.native="setNewColorFromRGB($event,'r')">
+                        </b-form-input>
+                      </b-col>
+                    </b-row>
+
+                    <b-row class="topMarginComponent">
+                      <b-col sm="1"><label for="G">G:</label></b-col>
+                      <b-col sm="8">
+                        <b-form-input size="sm" type="number" id="G" min="0" max="256"
+                                      :value="$store.state.colorPickerStore.baseColor.rgb.g"
+                                      @input.native="setNewColorFromRGB($event,'g')">
+                        </b-form-input>
+                      </b-col>
+                    </b-row>
+
+                    <b-row class="topMarginComponent">
+                      <b-col sm="1"><label for="B">B:</label></b-col>
+                      <b-col sm="8">
+                        <b-form-input size="sm" type="number" id="B" min="0" max="256"
+                                      :value="$store.state.colorPickerStore.baseColor.rgb.b"
+                                      @input.native="setNewColorFromRGB($event,'b')">
+                        </b-form-input>
+                      </b-col>
+                    </b-row>
+
+                  </b-col>
+
+                </b-row>
+
+                <b-row class="topMarginComponent" align-h="center">
+                  <b-col sm="2"><label for="Hex">Hex:</label></b-col>
+                  <b-col sm="5">
+                    <b-form-input size="sm" type="text" id="Hex"
+                                  :value="$store.state.colorPickerStore.baseColor.HEXString"
+                                  @input.native="setNewColorFromHex">
+                    </b-form-input>
+                  </b-col>
+                </b-row>
+              </b-col>
+              
+            <b-col sm=3 
+                        align-h="center">
+                               <p style="display:inline">  Base Color: </p>
+              <div height="100px" width="100px" style="min-width:100%; min-height:40px;"
+                   :style="{'background-color':$store.state.colorPickerStore.baseColor.HEXString}">
+              </div>
             </b-col>
 
-            <b-col sm="4">
-
-              <b-row>
-                <b-col sm="1"><label for="R">R:</label></b-col>
-                <b-col sm="8">
-                  <b-form-input size="sm" type="number" id="R" min="0" max="256"
-                                :value="$store.state.colorPickerStore.baseColor.rgb.r"
-                                @input.native="setNewColorFromRGB($event,'r')">
-                  </b-form-input>
-                </b-col>
-              </b-row>
-
-              <b-row class="topMarginComponent">
-                <b-col sm="1"><label for="G">G:</label></b-col>
-                <b-col sm="8">
-                  <b-form-input size="sm" type="number" id="G" min="0" max="256"
-                                :value="$store.state.colorPickerStore.baseColor.rgb.g"
-                                @input.native="setNewColorFromRGB($event,'g')">
-                  </b-form-input>
-                </b-col>
-              </b-row>
-
-              <b-row class="topMarginComponent">
-                <b-col sm="1"><label for="B">B:</label></b-col>
-                <b-col sm="8">
-                  <b-form-input size="sm" type="number" id="B" min="0" max="256"
-                                :value="$store.state.colorPickerStore.baseColor.rgb.b"
-                                @input.native="setNewColorFromRGB($event,'b')">
-                  </b-form-input>
-                </b-col>
-              </b-row>
-
-            </b-col>
-             <b-col sm="4">
-   <circled-palette></circled-palette>
-             </b-col>
-
-          </b-row>
-
-            <b-row class="topMarginComponent">
-                <b-col sm="1"><label for="Hex">Hex:</label></b-col>
-                <b-col sm="4">
-                  <b-form-input size="sm" type="text" id="Hex"
-                                :value="$store.state.colorPickerStore.baseColor.HEXString" @input.native="setNewColorFromHex">
-                  </b-form-input>
-                </b-col>
-                 <b-col sm="7">
-                 <p style="display:inline">  Base Color: </p>
-   <div  height="100px" width="100px" style="min-width:10px; min-height:40px;"
-                 :style="{'background-color':$store.state.colorPickerStore.baseColor.HEXString}">
-                 </div>
-    </b-col>
-              </b-row>
-   </b-col>
+            </b-row>
 
 
-</b-row>
+          </b-col>
 
 
-</b-col>
-
-          
-</b-row>
+        </b-row>
 
       </b-container>
     </div>
@@ -145,11 +146,11 @@
 </template>
 <script>
   import Color from "../helperJSClasses/Color";
-  import CircledPalette from "./CircledPalette";
+
   import _ from "lodash";
 
   export default {
-    components: {CircledPalette},
+    components: {},
     name: "ColorPicker",
     props: [
       "label",

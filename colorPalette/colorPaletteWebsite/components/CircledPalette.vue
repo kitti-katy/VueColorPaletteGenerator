@@ -1,6 +1,6 @@
 
 <template>
-        <svg id="circledPalette" height="100" width="100">
+        <svg id="circledPalette" height="200" width="200">
                     <polygon v-for="n in parseInt($store.state.hslChanges.colorNumber)"
                         :key="'piece' + (n-1)"
                             :points="getTriangle(360/$store.state.hslChanges.colorNumber, n)" 
@@ -21,9 +21,9 @@
 
     generatePoints(angle)
     {
-        let x = 50
+        let x = 100
         let y = 0
-        let c = 50
+        let c = 100
         angle = (angle ) * (Math.PI/180); // Convert to radians
         let rotatedX = Math.cos(angle) * (x - c) - Math.sin(angle) * (y - c) + c;
         let rotatedY = Math.sin(angle) * (x - c) + Math.cos(angle) * (y - c) + c;
@@ -33,7 +33,7 @@
         getTriangle(rotationAngle, n){
         let newPointA = this.generatePoints(n*rotationAngle)
         let newPointB = this.generatePoints((n+1)*rotationAngle)
-        let coordinates = '50,50 ' + newPointA.x + ', ' + newPointA.y + ' ' + newPointB.x + ', ' + newPointB.y
+        let coordinates = '100,100 ' + newPointA.x + ', ' + newPointA.y + ' ' + newPointB.x + ', ' + newPointB.y
         return coordinates
     },
 

@@ -1,8 +1,8 @@
 export const state = () => ({
-    colorNumber:6,
-    hueChange:12,
+    colorNumber:20,
+    hueChange:27,
     satChange:0,
-    lightChange:20
+    lightChange:12
   })
   
   export const mutations = {

@@ -12,27 +12,35 @@
  <b-container  class="topMarginContainer">
     <h5>Apply HSL Changes </h5>
     <hr>
-    <b-col sm="12" class="topMarginContainer" id='FiltersContainer' >
 
+ <b-container class="topMarginContainer" id='FiltersContainer'>
+ <b-row>
+      
 
+ <b-col sm="3">
       <slider-input id="HueFilter"
                     :value="$store.state.hslChanges.hueChange"
                     label="Hue Change"
                     value-name="hueChange"
                     store-path="hslChanges/"
                     min="0" max="100" step="1"></slider-input>
-      <slider-input id="SatFilter"
+      <slider-input class="topMarginComponent" id="SatFilter"
                     :value="$store.state.hslChanges.satChange"
                     label="Saturation Change"
                     value-name="satChange"
                     store-path="hslChanges/"
                     min="0" max="100" step="1"></slider-input>
-      <slider-input id="LightFilter"
+
+      <slider-input class="topMarginContainer" id="LightFilter"
                     :value="$store.state.hslChanges.lightChange"
                     label="Light Change"
                     value-name="lightChange"
                     store-path="hslChanges/"
                     min="0" max="100" step="1"></slider-input>
+
+       </b-col>
+        <b-col sm="3">
+
       <slider-input id="HSLColorNumber"
                     :value="$store.state.hslChanges.colorNumber"
                     label="Number Of Colors"
@@ -40,7 +48,18 @@
                     store-path="hslChanges/"
                     min="0" max="100" step="4"></slider-input>
 
+        </b-col>
+
+ <b-col sm="6">
+   <circled-palette></circled-palette>
  </b-col>
+
+
+
+
+ </b-row>
+   </b-container>
+ 
  </b-container>
 
  <b-container class="topMarginContainer">
@@ -55,7 +74,7 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
     <hr>
 
     <b-col id='GeneratedColors' sm="12" class="topMarginContainer">
-      <div style="display:inline;width:100px;" v-for="n in parseInt($store.state.hslChanges.colorNumber)+1" :key="n-1">
+      <div style="display:inline;width:100px;" v-for="n in parseInt($store.state.hslChanges.colorNumber)" :key="n-1">
         
         <div style="display:inline-block">
         <span style=" display:block;max-width:100px; text-align:center; vertical-align: text-bottom; margin:0">{{getNextColor(n-1).HEXString}}</span>
@@ -75,10 +94,11 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
   import SliderInput from "./SliderInput";
   import ColorPicker from "./ColorPicker";
   import Color from '../helperJSClasses/Color';
+  import CircledPalette from "./CircledPalette";
 
   export default {
     name: 'hslFilter',
-    components: {ColorPicker, SliderInput},
+    components: {ColorPicker, SliderInput, CircledPalette},
     props: ['label', 'textValue', 'sliderValue', 'textChange', 'sliderChange', 'inputMin', 'inputMax'],
     data() {
       return {
@@ -154,38 +174,38 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
   }
 
  #FiltersContainer{
-    height: 100%;
+  /*  height: 100%;
     display: grid;
     grid-gap: 20px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows:  60px;
+    grid-template-rows:  60px; */
  }
 
-  #HueFilter {
+  #HueFilter {/*
     width: 50%;
     grid-row: 1 / 4;
     grid-column: 1;
-    background-color: white;
+    background-color: white;*/
   }
 
-  #SatFilter {
+  #SatFilter {/*
     width: 50%;
     grid-row: 2;
     grid-column: 1;
-    background-color: white;
+    background-color: white;*/
   }
 
-  #LightFilter {
+  #LightFilter {/*
     width: 50%;
     grid-row: 3;
     grid-column: 1;
-    background-color: white;
+    background-color: white;*/
   }
 
-  #HSLColorNumber {
+  #HSLColorNumber {/*
     grid-row: 3;
     grid-column: 2;
-    background-color: white;
+    background-color: white;*/
   }
 
   #HSLColorSquares {

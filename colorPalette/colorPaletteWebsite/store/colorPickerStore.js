@@ -4,7 +4,7 @@
 import Color from '../helperJSClasses/Color'
 
 export const state = () => ({
-  baseColor: new Color(100, 0, 100, "RGB"),
+  baseColor: new Color(157, 15, 60, "HSL"),
   pickerCircleBorderColor: 'white',
   pickerMouseDown: false,
   pickerMouseMove: false,
