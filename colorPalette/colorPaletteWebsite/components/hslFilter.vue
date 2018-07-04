@@ -30,16 +30,40 @@
                     value-name="satChange"
                     store-path="hslChanges/"
                     min="0" max="100" step="1"></slider-input>
-
       <slider-input class="topMarginContainer" id="LightFilter"
                     :value="$store.state.hslChanges.lightChange"
                     label="Light Change"
                     value-name="lightChange"
                     store-path="hslChanges/"
                     min="0" max="100" step="1"></slider-input>
+       </b-col>
+
+    <b-col sm="3">
+      <slider-input id="HueStepFilter"
+                    :value="$store.state.hslChanges.hueStep"
+                    label="Hue Step"
+                    value-name="hueStep"
+                    store-path="hslChanges/"
+                    min="1" max="25" step="1"></slider-input>
+      <slider-input class="topMarginComponent" id="SatFilter"
+                    :value="$store.state.hslChanges.satStep"
+                    label="Saturation Step"
+                    value-name="satStep"
+                    store-path="hslChanges/"
+                    min="1" max="25" step="1"></slider-input>
+
+      <slider-input class="topMarginContainer" id="LightFilter"
+                    :value="$store.state.hslChanges.lightStep"
+                    label="Light Step"
+                    value-name="lightStep"
+                    store-path="hslChanges/"
+                    min="1" max="25" step="1"></slider-input>
 
        </b-col>
+
         <b-col sm="3">
+
+ <circled-palette></circled-palette>
 
       <slider-input id="HSLColorNumber"
                     :value="$store.state.hslChanges.colorNumber"
@@ -51,7 +75,7 @@
         </b-col>
 
  <b-col sm="6">
-   <circled-palette></circled-palette>
+  
  </b-col>
 
 
@@ -113,15 +137,18 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
     },
     methods: {
       getNextColor(i) {
+        let steppedHue = Math.floor(i/this.$store.state.hslChanges.hueStep)
+        let steppedSat = Math.floor(i/this.$store.state.hslChanges.satStep)
+        let steppedLight = Math.floor(i/this.$store.state.hslChanges.lightStep)
         let hueChange = this.$store.state.hslChanges.hueChange
         let satChange = this.$store.state.hslChanges.satChange
         let lightChange = this.$store.state.hslChanges.lightChange
 
         let color = new Color(this.$store.state.colorPickerStore.baseColor,
           {
-            hueChange: hueChange * (i) - 360 * (Math.floor(hueChange * i / 360)),
-            satChange: satChange * (i) - 100 * (Math.floor(satChange * i / 100)),
-            lightChange: lightChange * (i) - 100 * (Math.floor(lightChange * i / 100))
+            hueChange: hueChange * (steppedHue) - 360 * (Math.floor(hueChange * steppedHue / 360)),
+            satChange: satChange * (steppedSat) - 100 * (Math.floor(satChange * steppedSat / 100)),
+            lightChange: lightChange * (steppedLight) - 100 * (Math.floor(lightChange * steppedLight / 100))
           }
           , 0, "ChangeColor")
         return color

@@ -22,26 +22,29 @@
         It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
         and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
       </p>
-      <b-button id="buttonPrimary"
+
+      <div style="display:flex; justify-content: space-between ">
+      <b-button id="buttonPrimary" style="border:none"
               :style="{'color':$store.state.tryIt.buttonPrimaryFont, 'background-color':$store.state.tryIt.buttonPrimary}">
         primary
       </b-button>
-      <b-button id="buttonSecondary"
+      <b-button id="buttonSecondary" style="border:none"
               :style="{'color':$store.state.tryIt.buttonSecondaryFont, 'background-color':$store.state.tryIt.buttonSecondary}">
         secondary
       </b-button>
-      <b-button id="buttonSuccess"
+      <b-button id="buttonSuccess" style="border:none"
               :style="{'color':$store.state.tryIt.buttonSuccessFont, 'background-color':$store.state.tryIt.buttonSuccess}">
         success
       </b-button>
-      <b-button id="buttonInfo"
+      <b-button id="buttonInfo" style="border:none"
               :style="{'color':$store.state.tryIt.buttonInfoFont, 'background-color':$store.state.tryIt.buttonInfo}">
         info
       </b-button>
-      <b-button id="buttonDanger"
+      <b-button id="buttonDanger" style="border:none"
               :style="{'color':$store.state.tryIt.buttonDangerFont, 'background-color':$store.state.tryIt.buttonDanger}">
         danger
       </b-button>
+      </div>
 
     </div>
 </b-card>
@@ -155,15 +158,18 @@
     },
     methods: {
       getNextColor(i) {
+        let steppedHue = Math.floor(i/this.$store.state.hslChanges.hueStep)
+        let steppedSat = Math.floor(i/this.$store.state.hslChanges.satStep)
+        let steppedLight = Math.floor(i/this.$store.state.hslChanges.lightStep)
         let hueChange = this.$store.state.hslChanges.hueChange
         let satChange = this.$store.state.hslChanges.satChange
         let lightChange = this.$store.state.hslChanges.lightChange
 
         let color = new Color(this.$store.state.colorPickerStore.baseColor,
           {
-            hueChange: hueChange * (i) - 360 * (Math.floor(hueChange * i / 360)),
-            satChange: satChange * (i) - 100 * (Math.floor(satChange * i / 100)),
-            lightChange: lightChange * (i) - 100 * (Math.floor(lightChange * i / 100))
+            hueChange: hueChange * (steppedHue) - 360 * (Math.floor(hueChange * steppedHue / 360)),
+            satChange: satChange * (steppedSat) - 100 * (Math.floor(satChange * steppedSat / 100)),
+            lightChange: lightChange * (steppedLight) - 100 * (Math.floor(lightChange * steppedLight / 100))
           }
           , 0, "ChangeColor")
         return color

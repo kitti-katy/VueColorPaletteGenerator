@@ -12,7 +12,7 @@
 
 
     <input class='SliderInput' type="range"
-           v-model="value" @input="$store.commit(storePath+'set', {valueName:valueName, value: value})" min="min" max="max" step="step"/>
+           v-model="value" @input="$store.commit(storePath+'set', {valueName:valueName, value: value})" :min="min" :max="max" :step="step"/>
   </div>
 </template>
 
