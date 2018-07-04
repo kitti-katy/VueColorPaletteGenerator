@@ -1,9 +1,11 @@
 <template>
-  <div >
+  <div class="topMarginContainer">
+          <b-card>
       <h2>Try It! </h2>
 
-    <div id='appliableComponents' style="width:100%; height:100%"
-         :style="{'background-color':$store.state.tryIt.backgroundColor}">
+
+     <b-card   id='appliableComponents' :style="{'background-color':$store.state.tryIt.backgroundColor}">
+    <div style="width:100%; height:100%">
       <h1 id="h1" :style="{'color':$store.state.tryIt.h1Color}">Hello</h1>
       <h2 id="h2" :style="{'color':$store.state.tryIt.h2Color}">Hello</h2>
       <h3 id="h3" :style="{'color':$store.state.tryIt.h3Color}">Hello</h3>
@@ -42,6 +44,9 @@
       </b-button>
 
     </div>
+</b-card>
+
+<hr>
 
     <div id='chooseFrom'>
       <button :style="{'border':$store.state.tryIt.pickedAttribute=='backgroundColor'?'2px solid black':'none'}"
@@ -118,6 +123,7 @@
 
     </div>
 
+        <hr>
 
     <div id="colors" style="width:100%">
       <div style="display:inline-block" :id="'pickColor' + n"
@@ -128,8 +134,9 @@
       </div>
     </div>
     
-<img src='~/static/tree.svg' id="TreeSVG"/>
+<!-- <img src='~/static/tree.svg' id="TreeSVG"/> -->
 
+</b-card>
   </div>
 
 
@@ -182,7 +189,7 @@
       }
     },
         mounted: function () {
-      this.findAllFills()
+      //this.findAllFills()
     }
   }
 </script>

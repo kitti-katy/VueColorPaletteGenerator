@@ -6,7 +6,7 @@
       <nav-bar></nav-bar>
 
       <b-row align-h="around">
-        <b-col lg="6">
+        <b-col lg="7">
 
           <b-nav tabs>
             <b-nav-item active>HSL</b-nav-item>
@@ -23,9 +23,6 @@
 
 
     </div>
-
-
-<img src='~/static/tree.svg' alt="export JSON"/>
 
   </v-app>
 </template>

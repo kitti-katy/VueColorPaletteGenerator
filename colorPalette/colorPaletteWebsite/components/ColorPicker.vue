@@ -6,7 +6,7 @@
     <div id="ColorPickerBox">
       <b-container>
         <b-row>
-          <b-col sm="7">
+          <b-col sm="6">
             <div class="MainBox" style ="display:inline">
               <div id="pickerCircle"
                    :style="{'margin-left': $store.state.colorPickerStore.baseColor.hsl.hue-15 + 'px', 'width':'30px', 'height': '30px',
@@ -25,7 +25,7 @@
          'background-color': $store.state.colorPickerStore.baseColor.HEXString,
          'border':'2px solid white', 'border-radius':'3px' }">
               </div>
-              <canvas class="SaturationBox" id='canvasSaturationPicker' width='25' height='200'
+              <canvas style="display:inline" class="SaturationBox" id='canvasSaturationPicker' width='25' height='200'
                       v-on:mousedown.left="saturationPicked"></canvas>
             </div>
               <div>
@@ -36,13 +36,13 @@
 
 
 
-          <b-col sm="5">
+          <b-col sm="6">
 
             <b-row>
 
-              <b-col sm="9">
+              <b-col sm="12">
                 <b-row>
-                  <b-col sm="6">
+                  <b-col sm="4">
 
                     <b-row>
                       <b-col sm="1"><label for="H">H:</label></b-col>
@@ -76,7 +76,7 @@
 
                   </b-col>
 
-                  <b-col sm="6">
+                  <b-col sm="4">
 
 
                     <b-row>
@@ -111,7 +111,18 @@
 
                   </b-col>
 
+
+              <b-col sm=4 
+                        align-h="center">
+                 <p style="display:inline">  Base Color: </p>
+              <div height="100px" width="100px" style="min-width:100%; min-height:40px;"
+                   :style="{'background-color':$store.state.colorPickerStore.baseColor.HEXString}">
+              </div>
+            </b-col>
+
+
                 </b-row>
+
 
                 <b-row class="topMarginComponent" align-h="center">
                   <b-col sm="2"><label for="Hex">Hex:</label></b-col>
@@ -122,18 +133,11 @@
                     </b-form-input>
                   </b-col>
                 </b-row>
+
+
               </b-col>
               
-            <b-col sm=3 
-                        align-h="center">
-                               <p style="display:inline">  Base Color: </p>
-              <div height="100px" width="100px" style="min-width:100%; min-height:40px;"
-                   :style="{'background-color':$store.state.colorPickerStore.baseColor.HEXString}">
-              </div>
-            </b-col>
-
             </b-row>
-
 
           </b-col>
 
@@ -320,9 +324,9 @@
   }
 
   #canvasSaturationPicker {
-    height: 100%;
+    /* height: 100%;
 
-    /* display: grid;
+     display: grid;
      grid-gap: 5px;
      grid-template-columns: 360px 25px 1fr 1fr;
      grid-template-rows: 200px 60px 60px 60px auto;*/

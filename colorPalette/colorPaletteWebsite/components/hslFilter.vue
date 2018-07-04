@@ -128,7 +128,7 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
       },
 
       
-    exportPaletteToJsonFile(jsonData) {
+    exportPaletteToJsonFile() {
       let colorElements = document.getElementById("GeneratedColors").getElementsByTagName("span")
       let colors = {}
       for (var i = 0; i < colorElements.length; i++) { 
