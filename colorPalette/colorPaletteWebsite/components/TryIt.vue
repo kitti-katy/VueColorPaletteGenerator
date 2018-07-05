@@ -150,6 +150,7 @@
 <script>
 
   import Color from '../helperJSClasses/Color';
+  import getNextColor from '../helperJSClasses/getNextColor';
 
   export default {
     name: 'TryIt',
@@ -158,21 +159,9 @@
     },
     methods: {
       getNextColor(i) {
-        let steppedHue = Math.floor(i/this.$store.state.hslChanges.hueStep)
-        let steppedSat = Math.floor(i/this.$store.state.hslChanges.satStep)
-        let steppedLight = Math.floor(i/this.$store.state.hslChanges.lightStep)
-        let hueChange = this.$store.state.hslChanges.hueChange
-        let satChange = this.$store.state.hslChanges.satChange
-        let lightChange = this.$store.state.hslChanges.lightChange
-
-        let color = new Color(this.$store.state.colorPickerStore.baseColor,
-          {
-            hueChange: hueChange * (steppedHue) - 360 * (Math.floor(hueChange * steppedHue / 360)),
-            satChange: satChange * (steppedSat) - 100 * (Math.floor(satChange * steppedSat / 100)),
-            lightChange: lightChange * (steppedLight) - 100 * (Math.floor(lightChange * steppedLight / 100))
-          }
-          , 0, "ChangeColor")
-        return color
+        return getNextColor(i, this.$store.state.colorPickerStore.baseColor,this.$store.state.hslChanges.hueChange,
+         this.$store.state.hslChanges.satChange, this.$store.state.hslChanges.lightChange,
+         this.$store.state.hslChanges.hueStep, this.$store.state.hslChanges.satStep, this.$store.state.hslChanges.lightStep)
       },
       changePointingColor(hexColor, id) {
         this.$store.commit('tryIt/set', {valueName: 'pickedColor', value: hexColor})

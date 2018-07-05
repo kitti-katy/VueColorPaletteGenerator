@@ -10,6 +10,8 @@
 
 <script>
   import Color from "../helperJSClasses/Color";
+  import getNextColor from '../helperJSClasses/getNextColor';
+
   export default {
     components: {},
     name: 'CircledPalette',
@@ -37,20 +39,11 @@
         return coordinates
     },
 
-    getNextColor(i) {
-        let hueChange = this.$store.state.hslChanges.hueChange
-        let satChange = this.$store.state.hslChanges.satChange
-        let lightChange = this.$store.state.hslChanges.lightChange
-
-        let color = new Color(this.$store.state.colorPickerStore.baseColor,
-          {
-            hueChange: hueChange * (i) - 360 * (Math.floor(hueChange * i / 360)),
-            satChange: satChange * (i) - 100 * (Math.floor(satChange * i / 100)),
-            lightChange: lightChange * (i) - 100 * (Math.floor(lightChange * i / 100))
-          }
-          , 0, "ChangeColor")
-        return color
-      }
+      getNextColor(i) {
+        return getNextColor(i, this.$store.state.colorPickerStore.baseColor,this.$store.state.hslChanges.hueChange,
+         this.$store.state.hslChanges.satChange, this.$store.state.hslChanges.lightChange,
+         this.$store.state.hslChanges.hueStep, this.$store.state.hslChanges.satStep, this.$store.state.hslChanges.lightStep)
+      },
 
     }
   }

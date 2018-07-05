@@ -65,12 +65,14 @@
 
  <circled-palette></circled-palette>
 
+     <b-form-select @change="applyPreset" :options="presets" class="mb-3" />
+
       <slider-input id="HSLColorNumber"
                     :value="$store.state.hslChanges.colorNumber"
                     label="Number Of Colors"
                     value-name="colorNumber"
                     store-path="hslChanges/"
-                    min="0" max="100" step="4"></slider-input>
+                    min="0" max="120" step="4"></slider-input>
 
         </b-col>
 
@@ -119,6 +121,7 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
   import ColorPicker from "./ColorPicker";
   import Color from '../helperJSClasses/Color';
   import CircledPalette from "./CircledPalette";
+  import getNextColor from '../helperJSClasses/getNextColor';
 
   export default {
     name: 'hslFilter',
@@ -126,9 +129,13 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
     props: ['label', 'textValue', 'sliderValue', 'textChange', 'sliderChange', 'inputMin', 'inputMax'],
     data() {
       return {
-        headers: ['HSL', 'Starndards', 'Custom', 'From Picture']
+        headers: ['HSL', 'Starndards', 'Custom', 'From Picture'],
+        presets: [
+                 {value: {n:40,h:90,s:0,l:10,st_h:10,st_s:1,st_l:1} , text:'square'},
+                 {value:{n:120,h:30,s:0,l:10,st_h:10,st_s:1,st_l:1}, text:'analogous'}
+                 ]
+        }
       }
-    }
     ,
     computed: {
       hueChange() {
@@ -137,24 +144,10 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
     },
     methods: {
       getNextColor(i) {
-        let steppedHue = Math.floor(i/this.$store.state.hslChanges.hueStep)
-        let steppedSat = Math.floor(i/this.$store.state.hslChanges.satStep)
-        let steppedLight = Math.floor(i/this.$store.state.hslChanges.lightStep)
-        let hueChange = this.$store.state.hslChanges.hueChange
-        let satChange = this.$store.state.hslChanges.satChange
-        let lightChange = this.$store.state.hslChanges.lightChange
-
-        let color = new Color(this.$store.state.colorPickerStore.baseColor,
-          {
-            hueChange: hueChange * (steppedHue) - 360 * (Math.floor(hueChange * steppedHue / 360)),
-            satChange: satChange * (steppedSat) - 100 * (Math.floor(satChange * steppedSat / 100)),
-            lightChange: lightChange * (steppedLight) - 100 * (Math.floor(lightChange * steppedLight / 100))
-          }
-          , 0, "ChangeColor")
-        return color
+       return getNextColor(i, this.$store.state.colorPickerStore.baseColor,this.$store.state.hslChanges.hueChange,
+         this.$store.state.hslChanges.satChange, this.$store.state.hslChanges.lightChange,
+         this.$store.state.hslChanges.hueStep, this.$store.state.hslChanges.satStep, this.$store.state.hslChanges.lightStep)
       },
-
-      
     exportPaletteToJsonFile() {
       let colorElements = document.getElementById("GeneratedColors").getElementsByTagName("span")
       let colors = {}
@@ -171,7 +164,10 @@ style="border:none; background-color:transparent;float:right; font-size:0.75em;c
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportFileDefaultName);
     linkElement.click();
-}
+},
+   applyPreset(preset){
+      this.$store.commit("hslChanges/applyPreset", {p: preset});
+   }
     }
   }
 </script>
