@@ -23,6 +23,7 @@
 
 
     </div>
+    <hr>
 
   </v-app>
 </template>
